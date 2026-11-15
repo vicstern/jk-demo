@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JK Amortiguadores — Ingeniería y Laboratorio de Suspensión | CDMX</title>
+  <meta name="description" content="Laboratorio especializado en reconstrucción, dinamómetro de suspensión, calibración de valving y centro de servicio autorizado Öhlins en Ciudad de México.">
+  <meta property="og:title" content="JK Amortiguadores — Ingeniería de Suspensión">
+  <meta property="og:description" content="Diagnóstico en dinamómetro, reconstrucción de precisión y servicio autorizado Öhlins para autos de calle, motorsport y motocicletas en CDMX.">
+  <meta name="theme-color" content="#0b0d10">
+  <script>
+    (function() {
+      var saved = null;
+      try { saved = localStorage.getItem("jk-theme"); } catch (e) {}
+      var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      if (saved === "light" || (!saved && sysLight)) {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --bg-elevated: #11151c;
+      --bg-card: #151a23;
+      --bg-glass: rgba(10, 12, 16, 0.86);
+      --text-main: #f3f5f8;
+      --text-body: #b8c1cc;
+      --text-muted: #7d8794;
+      --border: #232a36;
+      --border-subtle: #1a202a;
+      --accent-gold: #e5a93c;
+      --accent-gold-soft: rgba(229, 169, 60, 0.14);
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --btn-primary-bg: #f3f5f8;
+      --btn-primary-text: #0a0c10;
+      --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.45);
+      --grid-line: rgba(255, 255, 255, 0.06);
+    }
+
+    html[data-theme="light"] {
+      --bg: #fcfcfd;
+      --bg-elevated: #f3f5f8;
+      --bg-card: #ffffff;
+      --bg-glass: rgba(252, 252, 253, 0.88);
+      --text-main: #0f141c;
+      --text-body: #374151;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-subtle: #edf2f7;
+      --accent-gold: #b7791f;
+      --accent-gold-soft: rgba(183, 121, 31, 0.1);
+      --accent-blue: #1d4ed8;
+      --accent-green: #059669;
+      --btn-primary-bg: #0f141c;
+      --btn-primary-text: #ffffff;
+      --shadow-card: 0 16px 36px rgba(15, 20, 28, 0.06);
+      --grid-line: rgba(15, 20, 28, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-monogram {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--border);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 0.96rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-body);
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theme-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .nav-cta {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.88;
+    }
+
+    /* CONTAINER & SECTIONS */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 88px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 14px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-body);
+      max-width: 680px;
+      margin-bottom: 44px;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 64px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4.2vw, 3.65rem);
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin-bottom: 22px;
+    }
+
+    .hero-lead {
+      font-size: 1.06rem;
+      color: var(--text-body);
+      margin-bottom: 32px;
+      max-width: 580px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      padding: 14px 26px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+    }
+
+    .hero-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-val {
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+      color: var(--text-main);
+    }
+
+    .spec-lbl {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .hero-visual {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #161b22, #0d1117);
+      box-shadow: var(--shadow-card);
+      aspect-ratio: 4 / 4.3;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.04);
+    }
+
+    .hero-badge-floating {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .badge-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .badge-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-green);
+      white-space: nowrap;
+    }
+
+    .status-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* BRAND RIBBON */
+    .brands-section {
+      padding: 36px 0;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brands-header {
+      text-align: center;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 14px;
+    }
+
+    .brand-pill {
+      padding: 8px 18px;
+      border-radius: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-body);
+    }
+
+    .brand-pill.ohlins {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+    }
+
+    /* VISUAL EDITORIAL GRID (SERVICES) */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--text-muted);
+    }
+
+    .service-img-wrap {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #1b222c, #0f1319);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .service-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .service-card:hover .service-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .service-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 4px 11px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: 0.05em;
+    }
+
+    .service-body {
+      padding: 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-body h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .service-body p {
+      font-size: 0.92rem;
+      color: var(--text-body);
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .service-meta {
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: monospace;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* DYNO TELEMETRY SIMULATOR */
+    .dyno-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .dyno-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .dyno-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      background: var(--bg-elevated);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      gap: 4px;
+    }
+
+    .dyno-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dyno-tab.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+
+    .dyno-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .dyno-canvas {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .dyno-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-line {
+      width: 22px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .dyno-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .metric-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+
+    .metric-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: monospace;
+      color: var(--accent-gold);
+    }
+
+    .metric-note {
+      font-size: 0.8rem;
+      color: var(--text-body);
+      margin-top: 4px;
+    }
+
+    /* PLATFORMS & GALLERY */
+    .platform-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .filter-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: var(--btn-primary-bg);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .gallery-item {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-img {
+      height: 220px;
+      width: 100%;
+      background: linear-gradient(135deg, #18202c, #0d1117);
+      overflow: hidden;
+    }
+
+    .gallery-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-caption {
+      padding: 18px;
+    }
+
+    .gallery-caption h4 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .gallery-caption p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    /* INTERACTIVE CONCIERGE / WHATSAPP CONFIGURATOR */
+    .concierge-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .config-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .step-group {
+      margin-bottom: 22px;
+    }
+
+    .step-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .option-pills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .opt-pill {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-body);
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .opt-pill.selected {
+      border-color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+      color: var(--text-main);
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+    }
+
+    .info-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .info-block h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .info-block p, .info-block a {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .info-block a:hover {
+      color: var(--accent-gold);
+    }
+
+    footer {
+      padding: 44px 0;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .dyno-layout,
+      .concierge-grid {
+        grid-template-columns: 1fr;
+      }
+      .services-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      section {
+        padding: 60px 0;
+      }
+      .dyno-box, .config-card, .info-card {
+        padding: 22px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="brand-monogram">JK</div>
+        <div class="brand-text">
+          <span class="brand-name">JK Amortiguadores</span>
+          <span class="brand-sub">Suspension Engineering Lab · CDMX</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#ingenieria">Ingeniería</a></li>
+        <li><a href="#dinamometro">Dinamómetro</a></li>
+        <li><a href="#aplicaciones">Plataformas</a></li>
+        <li><a href="#contacto">Diagnóstico & Ubicación</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀ Claro</button>
+        <a href="#contacto" class="nav-cta">Agendar / Cotizar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Centro Autorizado Öhlins & Laboratorio Multimarcas</div>
+          <h1 class="hero-title">Ingeniería de suspensión calibrada al milímetro.</h1>
+          <p class="hero-lead">
+            Reconstrucción integral, evaluación en banco de dinamómetro, modificación de curvas de compresión/rebote y fabricación a medida para autos de calle, vehículos blindados, motorsport y motocicletas de alto desempeño.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#contacto" class="btn-primary">Configurar solicitud técnica →</a>
+            <a href="#dinamometro" class="btn-secondary">Simulador de Dinamómetro</a>
+          </div>
+
+          <div class="hero-specs">
+            <div class="spec-item">
+              <span class="spec-val">10+ Marcas</span>
+              <span class="spec-lbl">Soporte OEM & Aftermarket High-End</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-val">Dyno Graph</span>
+              <span class="spec-lbl">Certificación de curva Fuerza vs. Velocidad</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-val">Coyoacán</span>
+              <span class="spec-lbl">Recepción directa Lun–Vie 9:00 a 18:00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=85" alt="Ingeniería de suspensión de alto desempeño">
+          <div class="hero-badge-floating">
+            <div class="badge-left">
+              <span class="badge-title">Laboratorio Los Reyes, Coyoacán</span>
+              <span class="badge-sub">Acolco 52 · Atención directa sin cita previa</span>
+            </div>
+            <span class="status-dot">Operando en CDMX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANDS RIBBON -->
+  <div class="brands-section">
+    <div class="container">
+      <div class="brands-header">Arquitecturas de suspensión que reconstruimos, modificamos y calibramos</div>
+      <div class="brands-grid">
+        <span class="brand-pill ohlins">★ Öhlins Authorized Service</span>
+        <span class="brand-pill">Bilstein</span>
+        <span class="brand-pill">KW Suspensions</span>
+        <span class="brand-pill">Fox Racing Shox</span>
+        <span class="brand-pill">Penske Racing Shocks</span>
+        <span class="brand-pill">Koni</span>
+        <span class="brand-pill">WP Suspension</span>
+        <span class="brand-pill">Icon Vehicle Dynamics</span>
+        <span class="brand-pill">Sachs</span>
+        <span class="brand-pill">Marzocchi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 CORE SERVICES -->
+  <section id="ingenieria">
+    <div class="container">
+      <div class="eyebrow">Capacidades de Laboratorio</div>
+      <h2 class="section-title">No cambiamos piezas a ciegas.<br>Medimos, reconstruimos y perfeccionamos.</h2>
+      <p class="section-desc">
+        Un sistema de suspensión de gama alta no es desechable. Devolvemos e incrementamos sus prestaciones originales mediante metrología, componentes legítimos y pruebas dinámicas.
+      </p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80" alt="Prueba en banco de dinamómetro">
+            <span class="service-tag">01 / TELEMETRÍA</span>
+          </div>
+          <div class="service-body">
+            <h3>Evaluación en Banco de Dinamómetro (Dyno)</h3>
+            <p>Medición objetiva de fuerza contra velocidad para detectar cavitación, pérdida de carga de nitrógeno, histéresis o asimetrías entre ejes antes y después de intervenir cada amortiguador.</p>
+            <div class="service-meta">
+              <span>Gráfica comparativa entregable</span>
+              <span>Baja & Alta Velocidad</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80" alt="Servicio autorizado Öhlins">
+            <span class="service-tag">02 / CERTIFICACIÓN OFICIAL</span>
+          </div>
+          <div class="service-body">
+            <h3>Centro de Servicio Autorizado Öhlins</h3>
+            <p>Mantenimiento preventivo y reconstrucción con retenes, sellos, fluidos de baja fricción y refacciones 100 % originales bajo especificaciones de fábrica para pista, calle y enduro.</p>
+            <div class="service-meta">
+              <span>Refacciones originales</span>
+              <span>Presurización con Nitrógeno</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80" alt="Revalving y modificación personalizada">
+            <span class="service-tag">03 / CUSTOM VALVING</span>
+          </div>
+          <div class="service-body">
+            <h3>Re-Valving y Modificación de Curvas</h3>
+            <p>Recalibración interna de paquetes de lainas (shims), pistones y pasos hidráulicos para adaptar el comportamiento del vehículo a blindaje, peso adicional, track days o topografía mexicana.</p>
+            <div class="service-meta">
+              <span>Compresión / Extensión a medida</span>
+              <span>Cálculo por peso vehicular</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-img-wrap">
+            <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80" alt="Modificación dimensional y fabricación">
+            <span class="service-tag">04 / FABRICACIÓN & ADAPTACIÓN</span>
+          </div>
+          <div class="service-body">
+            <h3>Modificación Dimensional y Proyectos Especiales</h3>
+            <p>Ajuste de carreras, longitudes extendidas/comprimidas, maquinado de vástagos, conversión a coilover y reconstrucción para clásicos, restomods, off-road y vehículos de competencia.</p>
+            <div class="service-meta">
+              <span>Maquinado de precisión</span>
+              <span>Soluciones fuera de catálogo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DYNO SIMULATOR -->
+  <section id="dinamometro">
+    <div class="container">
+      <div class="eyebrow">Simulador Interactivo de Telemetría</div>
+      <h2 class="section-title">La diferencia entre sentir y medir.</h2>
+      <p class="section-desc">
+        Explora cómo nuestro banco de pruebas grafica la respuesta hidráulica en compresión y extensión según el perfil de uso que diseñamos para tu vehículo.
+      </p>
+
+      <div class="dyno-box">
+        <div class="dyno-top">
+          <div>
+            <strong style="font-size: 1.05rem;">Curva Fuerza (N) vs. Velocidad de Pistón (mm/s)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-muted);" id="dynoSubtitle">Perfil seleccionado: Calle / OEM+ & Blindados</p>
+          </div>
+          <div class="dyno-tabs">
+            <button class="dyno-tab active" id="tab-street" onclick="setDynoProfile('street')">Calle / OEM+</button>
+            <button class="dyno-tab" id="tab-track" onclick="setDynoProfile('track')">Track / Motorsport</button>
+            <button class="dyno-tab" id="tab-offroad" onclick="setDynoProfile('offroad')">Off-Road / Rally</button>
+          </div>
+        </div>
+
+        <div class="dyno-layout">
+          <div class="dyno-canvas">
+            <svg id="dynoSvg" viewBox="0 0 600 300" width="100%" height="280"></svg>
+            <div class="dyno-legend">
+              <div class="legend-item">
+                <span class="legend-line" style="background: var(--accent-gold);"></span>
+                <span>Curva calibrada en JK (Óptima sin cavitación)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-line" style="background: var(--text-muted); opacity: 0.55;"></span>
+                <span>Amortiguador fatigado / sin servicio</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dyno-metrics">
+            <div class="metric-card">
+              <div class="metric-label">Compresión Baja Velocidad (Control de Carrocería)</div>
+              <div class="metric-value" id="m-lsc">+28% Firmeza Progresiva</div>
+              <div class="metric-note" id="m-lsc-note">Elimina cabeceo al frenar y balanceo en curva sin sacrificar confort urbano.</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Compresión Alta Velocidad (Absorción de Baches)</div>
+              <div class="metric-value" id="m-hsc">Flujo Laminar Desahogado</div>
+              <div class="metric-note" id="m-hsc-note">Protege rines y chasis ante impactos súbitos en asfalto irregular.</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Control de Rebote / Extensión</div>
+              <div class="metric-value" id="m-reb">Histéresis &lt; 2.1%</div>
+              <div class="metric-note" id="m-reb-note">Tracción inmediata del neumático tras la compresión, cero flotación.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS & VISUAL SHOWCASE -->
+  <section id="aplicaciones">
+    <div class="container">
+      <div class="eyebrow">Especialidades por División</div>
+      <h2 class="section-title">Tres mundos, un mismo estándar de ingeniería.</h2>
+      <p class="section-desc">
+        Filtra nuestras áreas de intervención para conocer el alcance técnico en cada plataforma.
+      </p>
+
+      <div class="platform-filter-bar">
+        <button class="filter-btn active" onclick="filterPlatform('all', this)">Todas las divisiones</button>
+        <button class="filter-btn" onclick="filterPlatform('auto', this)">Autos de Calle & Blindados</button>
+        <button class="filter-btn" onclick="filterPlatform('motorsport', this)">Track & Motorsport</button>
+        <button class="filter-btn" onclick="filterPlatform('moto', this)">Motocicletas High-End</button>
+      </div>
+
+      <div class="gallery-grid" id="platformGallery">
+        <div class="gallery-item" data-cat="auto">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=900&q=80" alt="Deportivos y sedanes premium">
+          </div>
+          <div class="gallery-caption">
+            <h4>Gran Turismo, Premium & Blindados</h4>
+            <p>Reconstrucción de amortiguadores magnéticos/electrónicos y recalibración para soportar blindaje sin perder altura ni estabilidad.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-cat="motorsport">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=900&q=80" alt="Autos de pista y competencia">
+          </div>
+          <div class="gallery-caption">
+            <h4>Track Day, Circuito & Rally</h4>
+            <p>Puesta a punto de coilovers de 1, 2, 3 y 4 vías (Öhlins, KW, Penske, Bilstein) con emparejamiento exacto en dinamómetro.</p>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-cat="moto">
+          <div class="gallery-img">
+            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=900&q=80" alt="Motocicletas de alto desempeño">
+          </div>
+          <div class="gallery-caption">
+            <h4>Motocicletas Supersport, Adventure & Enduro</h4>
+            <p>Mantenimiento integral de barras delanteras, cartuchos presurizados y monoshocks traseros (Öhlins, WP, Marzocchi, Sachs).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCIERGE / WHATSAPP CONFIGURATOR & LOCATION -->
+  <section id="contacto">
+    <div class="container">
+      <div class="eyebrow">Atención Directa de Ingeniería</div>
+      <h2 class="section-title">Inicia tu diagnóstico o visítanos en Coyoacán.</h2>
+      <p class="section-desc">
+        Selecciona la configuración de tu vehículo para enviar una ficha técnica directa a nuestro WhatsApp o acude directamente a nuestro laboratorio sin necesidad de cita previa.
+      </p>
+
+      <div class="concierge-grid">
+        <div class="config-card">
+          <div class="step-group">
+            <label class="step-label">1. Plataforma del vehículo</label>
+            <div class="option-pills" id="pillGroupPlatform">
+              <button class="opt-pill selected" onclick="selectPill('platform', 'Auto de Calle / Premium', this)">Auto de Calle / Premium</button>
+              <button class="opt-pill" onclick="selectPill('platform', 'Auto Track / Competencia', this)">Auto Track / Competencia</button>
+              <button class="opt-pill" onclick="selectPill('platform', 'Motocicleta', this)">Motocicleta</button>
+              <button class="opt-pill" onclick="selectPill('platform', 'Camioneta / Off-Road / Blindado', this)">Off-Road / Blindado</button>
+            </div>
+          </div>
+
+          <div class="step-group">
+            <label class="step-label">2. Servicio requerido</label>
+            <div class="option-pills" id="pillGroupService">
+              <button class="opt-pill selected" onclick="selectPill('service', 'Reconstrucción / Mantenimiento', this)">Reconstrucción / Servicio</button>
+              <button class="opt-pill" onclick="selectPill('service', 'Prueba en Dinamómetro (Dyno)', this)">Prueba en Dinamómetro</button>
+              <button class="opt-pill" onclick="selectPill('service', 'Servicio Autorizado Öhlins', this)">Servicio Autorizado Öhlins</button>
+              <button class="opt-pill" onclick="selectPill('service', 'Modificación / Valving a Medida', this)">Modificación / Re-Valving</button>
+            </div>
+          </div>
+
+          <div class="step-group">
+            <label class="step-label">3. Marca de suspensión o modelo de vehículo (Opcional)</label>
+            <input type="text" id="vehicleDetails" class="input-field" placeholder="Ej. Bilstein B8 en BMW M2 / Monoshock Öhlins en R1250GS">
+          </div>
+
+          <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="sendWhatsAppConfig()">
+            Enviar ficha técnica por WhatsApp →
+          </button>
+        </div>
+
+        <div class="info-card">
+          <div class="info-block">
+            <h4>Dirección del Laboratorio</h4>
+            <p>Acolco 52, Col. Los Reyes, Coyoacán<br>04330 Ciudad de México, CDMX</p>
+            <p style="margin-top: 8px;">
+              <a href="https://maps.google.com/?q=Acolco+52,+Los+Reyes,+Coyoacan,+04330+CDMX" target="_blank" rel="noopener">Abrir ubicación en Google Maps ↗</a>
+            </p>
+          </div>
+
+          <div class="info-block">
+            <h4>Horario de Recepción</h4>
+            <p>Lunes a Viernes: 09:00 a 18:00 hrs</p>
+            <p style="font-size: 0.84rem; color: var(--accent-green); margin-top: 4px;">✓ Recepción directa sin cita previa (Walk-ins welcome)</p>
+          </div>
+
+          <div class="info-block">
+            <h4>Teléfono Directo</h4>
+            <p><a href="tel:+525556182070">+52 55 5618 2070</a></p>
+          </div>
+
+          <div class="info-block">
+            <h4>Redes & Comunidad Técnica</h4>
+            <p>
+              Instagram: <a href="https://instagram.com/jk_amortiguadores" target="_blank" rel="noopener">@jk_amortiguadores</a><br>
+              Web oficial: www.jkamortiguadores.mx
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <strong>JK Amortiguadores</strong> — Reparación · Modificación · Adaptación · Construcción<br>
+      Acolco 52, Los Reyes, Coyoacán, CDMX · Tel. 55 5618 2070 · Propuesta de Arquitectura Digital
+    </div>
+  </footer>
+
+  <script>
+    // THEME LOGIC (Respeta modo del sistema por defecto)
+    function updateThemeUI() {
+      const btn = document.getElementById("themeBtn");
+      if (!btn) return;
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      btn.textContent = isLight ? "☾ Oscuro" : "☀ Claro";
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isLight = html.getAttribute("data-theme") === "light";
+      const next = isLight ? "dark" : "light";
+      html.setAttribute("data-theme", next);
+      try { localStorage.setItem("jk-theme", next); } catch (e) {}
+      updateThemeUI();
+    }
+
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function(e) {
+        let saved = null;
+        try { saved = localStorage.getItem("jk-theme"); } catch (err) {}
+        if (!saved) {
+          document.documentElement.setAttribute("data-theme", e.matches ? "light" : "dark");
+          updateThemeUI();
+        }
+      });
+    }
+
+    // DYNO TELEMETRY SIMULATOR
+    const DYNO_PROFILES = {
+      street: {
+        subtitle: "Perfil seleccionado: Calle / OEM+ & Blindados",
+        optPath: "M 40,150 Q 190,105 320,75 T 560,38 M 40,150 Q 190,195 320,222 T 560,255",
+        wornPath: "M 40,150 Q 180,135 320,122 T 560,108 M 40,150 Q 180,168 320,185 T 560,205",
+        lsc: "+28% Firmeza Progresiva",
+        lscNote: "Elimina cabeceo al frenar y balanceo en curva sin sacrificar confort urbano.",
+        hsc: "Flujo Laminar Desahogado",
+        hscNote: "Protege rines y chasis ante impactos súbitos en asfalto irregular.",
+        reb: "Histéresis < 2.1%",
+        rebNote: "Tracción inmediata del neumático tras la compresión, cero flotación."
+      },
+      track: {
+        subtitle: "Perfil seleccionado: Track Day / Motorsport",
+        optPath: "M 40,150 Q 170,78 310,48 T 560,20 M 40,150 Q 170,222 310,252 T 560,280",
+        wornPath: "M 40,150 Q 180,128 320,115 T 560,96 M 40,150 Q 180,175 320,195 T 560,218",
+        lsc: "+54% Soporte de Plataforma",
+        lscNote: "Máxima estabilidad aerodinámica y transferencia de pesos milimétrica en apoyos.",
+        hsc: "Digresivo de Competencia",
+        hscNote: "Absorbe lavaderos (kerbs) en circuito manteniendo el neumático pegado al piso.",
+        reb: "Emparejamiento < 1.0%",
+        rebNote: "Simetría izquierda/derecha certificada en banco de pruebas."
+      },
+      offroad: {
+        subtitle: "Perfil seleccionado: Off-Road / Rally Raid & Carga",
+        optPath: "M 40,150 Q 200,92 350,55 T 560,26 M 40,150 Q 200,205 350,238 T 560,268",
+        wornPath: "M 40,150 Q 190,132 330,118 T 560,102 M 40,150 Q 190,170 330,188 T 560,210",
+        lsc: "Control Progresivo de Carrera",
+        lscNote: "Evita topes bruscos (bottom-out) en saltos, terracería rápida y carga pesada.",
+        hsc: "Resistencia Térmica Extendida",
+        hscNote: "Fluidos sintéticos de alto índice de viscosidad contra fatiga por temperatura.",
+        reb: "Recuperación Rápida Controlada",
+        rebNote: "Prepara la rueda para obstáculos consecutivos sin empaquetamiento (packing)."
+      }
+    };
+
+    function setDynoProfile(key) {
+      const p = DYNO_PROFILES[key];
+      if (!p) return;
+      ["street", "track", "offroad"].forEach(k => {
+        document.getElementById("tab-" + k).classList.toggle("active", k === key);
+      });
+      document.getElementById("dynoSubtitle").textContent = p.subtitle;
+      document.getElementById("m-lsc").textContent = p.lsc;
+      document.getElementById("m-lsc-note").textContent = p.lscNote;
+      document.getElementById("m-hsc").textContent = p.hsc;
+      document.getElementById("m-hsc-note").textContent = p.hscNote;
+      document.getElementById("m-reb").textContent = p.reb;
+      document.getElementById("m-reb-note").textContent = p.rebNote;
+
+      const svg = document.getElementById("dynoSvg");
+      svg.innerHTML = `
+        <line x1="40" y1="30" x2="560" y2="30" stroke="var(--grid-line)" stroke-width="1"/>
+        <line x1="40" y1="90" x2="560" y2="90" stroke="var(--grid-line)" stroke-width="1"/>
+        <line x1="40" y1="150" x2="560" y2="150" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="40" y1="210" x2="560" y2="210" stroke="var(--grid-line)" stroke-width="1"/>
+        <line x1="40" y1="270" x2="560" y2="270" stroke="var(--grid-line)" stroke-width="1"/>
+        <text x="45" y="24" fill="var(--text-muted)" font-size="10" font-family="monospace">COMPRESIÓN (+N)</text>
+        <text x="45" y="286" fill="var(--text-muted)" font-size="10" font-family="monospace">EXTENSIÓN / REBOTE (-N)</text>
+        <text x="460" y="144" fill="var(--text-muted)" font-size="10" font-family="monospace">Velocidad (mm/s) →</text>
+        <path d="${p.wornPath}" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="6,5" opacity="0.55"/>
+        <path d="${p.optPath}" fill="none" stroke="var(--accent-gold)" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="40" cy="150" r="4" fill="var(--text-main)"/>
+      `;
+    }
+
+    // PLATFORM FILTER
+    function filterPlatform(cat, btnEl) {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      document.querySelectorAll("#platformGallery .gallery-item").forEach(item => {
+        if (cat === "all" || item.getAttribute("data-cat") === cat) {
+          item.style.display = "flex";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    // WHATSAPP CONFIGURATOR
+    let selectedConfig = {
+      platform: "Auto de Calle / Premium",
+      service: "Reconstrucción / Mantenimiento"
+    };
+
+    function selectPill(group, val, btnEl) {
+      selectedConfig[group] = val;
+      const parentId = group === "platform" ? "pillGroupPlatform" : "pillGroupService";
+      document.querySelectorAll("#" + parentId + " .opt-pill").forEach(b => b.classList.remove("selected"));
+      btnEl.classList.add("selected");
+    }
+
+    function sendWhatsAppConfig() {
+      const details = document.getElementById("vehicleDetails").value.trim();
+      let msg = `Hola JK Amortiguadores, me gustaría solicitar información / cotización:\n\n`;
+      msg += `• Plataforma: ${selectedConfig.platform}\n`;
+      msg += `• Servicio: ${selectedConfig.service}\n`;
+      if (details) {
+        msg += `• Vehículo / Suspensión: ${details}\n`;
+      }
+      const url = `https://wa.me/525556182070?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    }
+
+    // INIT
+    updateThemeUI();
+    setDynoProfile("street");
+  </script>
+</body>
+</html>
