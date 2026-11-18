@@ -1,1356 +1,523 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JK Amortiguadores — Ingeniería y Laboratorio de Suspensión | CDMX</title>
-  <meta name="description" content="Laboratorio especializado en reconstrucción, dinamómetro de suspensión, calibración de valving y centro de servicio autorizado Öhlins en Ciudad de México.">
-  <meta property="og:title" content="JK Amortiguadores — Ingeniería de Suspensión">
-  <meta property="og:description" content="Diagnóstico en dinamómetro, reconstrucción de precisión y servicio autorizado Öhlins para autos de calle, motorsport y motocicletas en CDMX.">
-  <meta name="theme-color" content="#0b0d10">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JK Amortiguadores (JK Custom Shocks) | Motos, Autos, Blindados y Racing · Coyoacán</title>
+  <meta name="description" content="Laboratorio especializado en reconstrucción, modificación y revalvulado de amortiguadores en Coyoacán, CDMX. Maquinaria italiana Mangusta by Emmetec y banco dinamómetro Intercomp." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   <script>
-    (function() {
-      var saved = null;
-      try { saved = localStorage.getItem("jk-theme"); } catch (e) {}
-      var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-      if (saved === "light" || (!saved && sysLight)) {
-        document.documentElement.setAttribute("data-theme", "light");
-      } else {
-        document.documentElement.setAttribute("data-theme", "dark");
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Oswald', 'sans-serif'],
+          },
+          colors: {
+            jk: {
+              red: '#E11D48',
+              amber: '#F59E0B',
+              emerald: '#10B981',
+              dark: '#0B0D10',
+              card: '#14181F',
+              border: '#242B35'
+            }
+          }
+        }
       }
-    })();
+    }
   </script>
-  <style>
-    :root {
-      --bg: #0a0c10;
-      --bg-elevated: #11151c;
-      --bg-card: #151a23;
-      --bg-glass: rgba(10, 12, 16, 0.86);
-      --text-main: #f3f5f8;
-      --text-body: #b8c1cc;
-      --text-muted: #7d8794;
-      --border: #232a36;
-      --border-subtle: #1a202a;
-      --accent-gold: #e5a93c;
-      --accent-gold-soft: rgba(229, 169, 60, 0.14);
-      --accent-blue: #3b82f6;
-      --accent-green: #10b981;
-      --btn-primary-bg: #f3f5f8;
-      --btn-primary-text: #0a0c10;
-      --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.45);
-      --grid-line: rgba(255, 255, 255, 0.06);
-    }
-
-    html[data-theme="light"] {
-      --bg: #fcfcfd;
-      --bg-elevated: #f3f5f8;
-      --bg-card: #ffffff;
-      --bg-glass: rgba(252, 252, 253, 0.88);
-      --text-main: #0f141c;
-      --text-body: #374151;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --border-subtle: #edf2f7;
-      --accent-gold: #b7791f;
-      --accent-gold-soft: rgba(183, 121, 31, 0.1);
-      --accent-blue: #1d4ed8;
-      --accent-green: #059669;
-      --btn-primary-bg: #0f141c;
-      --btn-primary-text: #ffffff;
-      --shadow-card: 0 16px 36px rgba(15, 20, 28, 0.06);
-      --grid-line: rgba(15, 20, 28, 0.06);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
-      transition: background-color 0.25s ease, color 0.25s ease;
-      overflow-x: hidden;
-    }
-
-    /* NAVBAR */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg-glass);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-main);
-    }
-
-    .brand-monogram {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
-      border: 1px solid var(--border);
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-name {
-      font-weight: 700;
-      font-size: 0.96rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      line-height: 1.1;
-    }
-
-    .brand-sub {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-body);
-      font-size: 0.84rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .theme-btn {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-body);
-      padding: 7px 13px;
-      border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .theme-btn:hover {
-      color: var(--text-main);
-      border-color: var(--text-muted);
-    }
-
-    .nav-cta {
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      transition: opacity 0.2s;
-    }
-
-    .nav-cta:hover {
-      opacity: 0.88;
-    }
-
-    /* CONTAINER & SECTIONS */
-    .container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    section {
-      padding: 88px 0;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent-gold);
-      background: var(--accent-gold-soft);
-      padding: 6px 12px;
-      border-radius: 999px;
-      margin-bottom: 18px;
-    }
-
-    .section-title {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.18;
-      margin-bottom: 14px;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-body);
-      max-width: 680px;
-      margin-bottom: 44px;
-    }
-
-    /* HERO */
-    .hero {
-      padding: 64px 0 80px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 48px;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 4.2vw, 3.65rem);
-      font-weight: 750;
-      letter-spacing: -0.03em;
-      line-height: 1.08;
-      margin-bottom: 22px;
-    }
-
-    .hero-lead {
-      font-size: 1.06rem;
-      color: var(--text-body);
-      margin-bottom: 32px;
-      max-width: 580px;
-    }
-
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 40px;
-    }
-
-    .btn-primary {
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      padding: 14px 26px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.2s ease;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: var(--bg-elevated);
-      color: var(--text-main);
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: border-color 0.2s;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--text-muted);
-    }
-
-    .hero-specs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      padding-top: 28px;
-      border-top: 1px solid var(--border);
-    }
-
-    .spec-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .spec-val {
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
-      color: var(--text-main);
-    }
-
-    .spec-lbl {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .hero-visual {
-      position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, #161b22, #0d1117);
-      box-shadow: var(--shadow-card);
-      aspect-ratio: 4 / 4.3;
-    }
-
-    .hero-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: contrast(1.04);
-    }
-
-    .hero-badge-floating {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .badge-left {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .badge-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .badge-sub {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--accent-green);
-      white-space: nowrap;
-    }
-
-    .status-dot::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent-green);
-      box-shadow: 0 0 8px var(--accent-green);
-    }
-
-    /* BRAND RIBBON */
-    .brands-section {
-      padding: 36px 0;
-      background: var(--bg-elevated);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brands-header {
-      text-align: center;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .brands-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px 14px;
-    }
-
-    .brand-pill {
-      padding: 8px 18px;
-      border-radius: 8px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text-body);
-    }
-
-    .brand-pill.ohlins {
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
-      background: var(--accent-gold-soft);
-    }
-
-    /* VISUAL EDITORIAL GRID (SERVICES) */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
-    }
-
-    .service-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .service-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--text-muted);
-    }
-
-    .service-img-wrap {
-      width: 100%;
-      height: 250px;
-      background: linear-gradient(135deg, #1b222c, #0f1319);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .service-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.45s ease;
-    }
-
-    .service-card:hover .service-img-wrap img {
-      transform: scale(1.04);
-    }
-
-    .service-tag {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: var(--bg-glass);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      padding: 4px 11px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-family: monospace;
-      font-weight: 600;
-      color: var(--text-main);
-      letter-spacing: 0.05em;
-    }
-
-    .service-body {
-      padding: 26px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .service-body h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .service-body p {
-      font-size: 0.92rem;
-      color: var(--text-body);
-      margin-bottom: 18px;
-      flex: 1;
-    }
-
-    .service-meta {
-      padding-top: 14px;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-family: monospace;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    /* DYNO TELEMETRY SIMULATOR */
-    .dyno-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow: var(--shadow-card);
-    }
-
-    .dyno-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .dyno-tabs {
-      display: inline-flex;
-      flex-wrap: wrap;
-      background: var(--bg-elevated);
-      padding: 4px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      gap: 4px;
-    }
-
-    .dyno-tab {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .dyno-tab.active {
-      background: var(--bg-card);
-      color: var(--text-main);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-    }
-
-    .dyno-layout {
-      display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 28px;
-      align-items: center;
-    }
-
-    .dyno-canvas {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-    }
-
-    .dyno-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      margin-top: 12px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .legend-line {
-      width: 22px;
-      height: 3px;
-      border-radius: 2px;
-    }
-
-    .dyno-metrics {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .metric-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 18px;
-    }
-
-    .metric-label {
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .metric-value {
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: monospace;
-      color: var(--accent-gold);
-    }
-
-    .metric-note {
-      font-size: 0.8rem;
-      color: var(--text-body);
-      margin-top: 4px;
-    }
-
-    /* PLATFORMS & GALLERY */
-    .platform-filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    .filter-btn {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-body);
-      padding: 9px 18px;
-      border-radius: 999px;
-      font-size: 0.84rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn.active {
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      border-color: var(--btn-primary-bg);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .gallery-item {
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .gallery-img {
-      height: 220px;
-      width: 100%;
-      background: linear-gradient(135deg, #18202c, #0d1117);
-      overflow: hidden;
-    }
-
-    .gallery-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-caption {
-      padding: 18px;
-    }
-
-    .gallery-caption h4 {
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .gallery-caption p {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-    }
-
-    /* INTERACTIVE CONCIERGE / WHATSAPP CONFIGURATOR */
-    .concierge-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 36px;
-      align-items: start;
-    }
-
-    .config-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 32px;
-      box-shadow: var(--shadow-card);
-    }
-
-    .step-group {
-      margin-bottom: 22px;
-    }
-
-    .step-label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .option-pills {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .opt-pill {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-body);
-      padding: 11px 14px;
-      border-radius: 10px;
-      font-size: 0.84rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.18s;
-    }
-
-    .opt-pill.selected {
-      border-color: var(--accent-gold);
-      background: var(--accent-gold-soft);
-      color: var(--text-main);
-    }
-
-    .input-field {
-      width: 100%;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-family: inherit;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: var(--accent-gold);
-    }
-
-    .info-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .info-block h4 {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .info-block p, .info-block a {
-      font-size: 0.98rem;
-      color: var(--text-main);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .info-block a:hover {
-      color: var(--accent-gold);
-    }
-
-    footer {
-      padding: 44px 0;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 920px) {
-      .hero-grid,
-      .dyno-layout,
-      .concierge-grid {
-        grid-template-columns: 1fr;
-      }
-      .services-grid,
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-links {
-        display: none;
-      }
-      section {
-        padding: 60px 0;
-      }
-      .dyno-box, .config-card, .info-card {
-        padding: 22px 18px;
-      }
-    }
-  </style>
 </head>
-<body>
+<body class="bg-jk-dark text-zinc-100 font-sans antialiased selection:bg-jk-red selection:text-white">
+
+  <!-- TOP BAR ECO MOTTO -->
+  <div class="bg-emerald-950/80 border-b border-emerald-800/50 text-emerald-200 text-xs py-2 px-4 text-center">
+    <span class="font-semibold text-emerald-400">♻️ "—Help! —Save The Earth By Letting Us Recycle Your Old Parts"</span>
+    <span class="hidden sm:inline"> · Reciclamos y renovamos tu amortiguador original dejándolo como nuevo.</span>
+  </div>
 
   <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="nav-container">
-      <a href="#" class="brand-logo">
-        <div class="brand-monogram">JK</div>
-        <div class="brand-text">
-          <span class="brand-name">JK Amortiguadores</span>
-          <span class="brand-sub">Suspension Engineering Lab · CDMX</span>
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-jk-dark/90 border-b border-jk-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <span class="bg-jk-red text-white font-display font-bold text-xl px-2.5 py-0.5 rounded tracking-wider">JK</span>
+        <div class="leading-tight">
+          <span class="font-display font-bold text-lg tracking-wide uppercase block">Amortiguadores</span>
+          <span class="text-[10px] text-zinc-400 uppercase tracking-widest block -mt-1">Custom Shocks · CDMX</span>
         </div>
       </a>
-
-      <ul class="nav-links">
-        <li><a href="#ingenieria">Ingeniería</a></li>
-        <li><a href="#dinamometro">Dinamómetro</a></li>
-        <li><a href="#aplicaciones">Plataformas</a></li>
-        <li><a href="#contacto">Diagnóstico & Ubicación</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀ Claro</button>
-        <a href="#contacto" class="nav-cta">Agendar / Cotizar</a>
-      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-300">
+        <a href="#especialidades" class="hover:text-white transition">Qué atendemos</a>
+        <a href="#reciclaje" class="hover:text-white transition">Reciclaje Técnico</a>
+        <a href="#tecnologia" class="hover:text-white transition">Laboratorio Emmetec</a>
+        <a href="#equipo" class="hover:text-white transition">Equipo</a>
+        <a href="#ubicacion" class="hover:text-white transition">Ubicación</a>
+      </nav>
+      <a href="#cotizar" class="bg-jk-red hover:bg-rose-600 text-white font-medium text-sm px-4 py-2 rounded-lg transition">
+        Cotizar por WhatsApp
+      </a>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Centro Autorizado Öhlins & Laboratorio Multimarcas</div>
-          <h1 class="hero-title">Ingeniería de suspensión calibrada al milímetro.</h1>
-          <p class="hero-lead">
-            Reconstrucción integral, evaluación en banco de dinamómetro, modificación de curvas de compresión/rebote y fabricación a medida para autos de calle, vehículos blindados, motorsport y motocicletas de alto desempeño.
+  <section class="relative overflow-hidden border-b border-jk-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20 grid md:grid-cols-12 gap-10 items-center">
+      <div class="md:col-span-7 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700 text-xs font-medium text-amber-400">
+          <span>COYOACÁN, CDMX</span>
+          <span>•</span>
+          <span>+30 AÑOS DE INGENIERÍA AUTOMOTRIZ</span>
+        </div>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight leading-none">
+          Tu amortiguador original <span class="text-jk-red">como nuevo</span>: Motos, Autos, Blindados y Racing
+        </h1>
+        <p class="text-zinc-300 text-lg leading-relaxed max-w-2xl">
+          Reparamos, modificamos y revalvulamos amortiguadores con refacciones italianas de primera calidad. Probamos cada pieza en nuestro <strong>banco dinamómetro Intercomp</strong> y operamos con maquinaria <strong>Mangusta by Emmetec</strong> traída directamente de Italia.
+        </p>
+
+        <!-- REGLA DE ORO: TUBO Y FLECHA CROMADA -->
+        <div class="bg-jk-card/90 border-l-4 border-emerald-500 p-4 rounded-r-xl text-sm text-zinc-200 space-y-1">
+          <div class="font-semibold text-emerald-400">♻️ ¿Cuándo se puede dejar como nuevo tu amortiguador?</div>
+          <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed">
+            Siempre y cuando <strong>el tubo y la flecha cromada (vástago) no estén golpeados o doblados</strong>, reconstruimos internamente tu amortiguador con sellos y componentes italianos nuevos, evitando el costo de comprar uno nuevo y ayudando al planeta.
           </p>
-
-          <div class="hero-ctas">
-            <a href="#contacto" class="btn-primary">Configurar solicitud técnica →</a>
-            <a href="#dinamometro" class="btn-secondary">Simulador de Dinamómetro</a>
-          </div>
-
-          <div class="hero-specs">
-            <div class="spec-item">
-              <span class="spec-val">10+ Marcas</span>
-              <span class="spec-lbl">Soporte OEM & Aftermarket High-End</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-val">Dyno Graph</span>
-              <span class="spec-lbl">Certificación de curva Fuerza vs. Velocidad</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-val">Coyoacán</span>
-              <span class="spec-lbl">Recepción directa Lun–Vie 9:00 a 18:00</span>
-            </div>
-          </div>
         </div>
 
-        <div class="hero-visual">
-          <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=85" alt="Ingeniería de suspensión de alto desempeño">
-          <div class="hero-badge-floating">
-            <div class="badge-left">
-              <span class="badge-title">Laboratorio Los Reyes, Coyoacán</span>
-              <span class="badge-sub">Acolco 52 · Atención directa sin cita previa</span>
-            </div>
-            <span class="status-dot">Operando en CDMX</span>
+        <div class="flex flex-wrap gap-4 pt-1">
+          <a href="#cotizar" class="bg-jk-red hover:bg-rose-600 text-white font-semibold px-6 py-3.5 rounded-xl transition flex items-center gap-2">
+            <span>Cotizar mi amortiguador</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#tecnologia" class="bg-jk-card hover:bg-zinc-800 border border-jk-border text-zinc-200 font-medium px-6 py-3.5 rounded-xl transition">
+            Ver nuestro laboratorio
+          </a>
+        </div>
+      </div>
+
+      <!-- FOTO PRINCIPAL: MANGUSTA BY EMMETEC (IMG_7602.jpeg) -->
+      <div class="md:col-span-5">
+        <div class="relative rounded-2xl overflow-hidden bg-jk-card border border-jk-border aspect-[4/5] shadow-2xl">
+          <img id="img-hero" src="IMG_7602.jpeg" alt="Máquina Mangusta by Emmetec en JK Amortiguadores" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-jk-dark via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4 bg-jk-dark/90 backdrop-blur-md border border-jk-border p-4 rounded-xl">
+            <p class="text-xs text-amber-400 font-semibold uppercase tracking-wider">Mangusta by EMMETEC · Italia</p>
+            <p class="text-sm text-zinc-200 mt-0.5">Equipamiento especializado capaz de abrir cartuchos sellados Bilstein, Öhlins, FOX, KW y suspensiones de alta gama.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- BRANDS RIBBON -->
-  <div class="brands-section">
-    <div class="container">
-      <div class="brands-header">Arquitecturas de suspensión que reconstruimos, modificamos y calibramos</div>
-      <div class="brands-grid">
-        <span class="brand-pill ohlins">★ Öhlins Authorized Service</span>
-        <span class="brand-pill">Bilstein</span>
-        <span class="brand-pill">KW Suspensions</span>
-        <span class="brand-pill">Fox Racing Shox</span>
-        <span class="brand-pill">Penske Racing Shocks</span>
-        <span class="brand-pill">Koni</span>
-        <span class="brand-pill">WP Suspension</span>
-        <span class="brand-pill">Icon Vehicle Dynamics</span>
-        <span class="brand-pill">Sachs</span>
-        <span class="brand-pill">Marzocchi</span>
+  <!-- MARCAS QUE TRABAJAMOS (DEL FOLLETO OFICIAL) -->
+  <section class="py-8 bg-jk-card/60 border-b border-jk-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <p class="text-center text-xs uppercase tracking-widest text-zinc-400 mb-4">Especialistas en reconstrucción y servicio de las mejores marcas del mundo</p>
+      <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-12 gap-2.5 text-center font-display font-bold text-sm tracking-wider">
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-amber-400">BILSTEIN</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">ÖHLINS</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">FOX</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">KING</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">KW</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">KONI</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">WP</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">SHOWA</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">SACHS</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">ICON</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">REIGER</div>
+        <div class="bg-jk-dark border border-jk-border py-2.5 px-2 rounded-lg text-white">INTRAX</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- 4 CORE SERVICES -->
-  <section id="ingenieria">
-    <div class="container">
-      <div class="eyebrow">Capacidades de Laboratorio</div>
-      <h2 class="section-title">No cambiamos piezas a ciegas.<br>Medimos, reconstruimos y perfeccionamos.</h2>
-      <p class="section-desc">
-        Un sistema de suspensión de gama alta no es desechable. Devolvemos e incrementamos sus prestaciones originales mediante metrología, componentes legítimos y pruebas dinámicas.
-      </p>
+  <!-- QUÉ SÍ Y QUÉ NO ATENDEMOS -->
+  <section id="especialidades" class="py-16 md:py-24 border-b border-jk-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
+      <div class="max-w-3xl space-y-3">
+        <span class="text-jk-red font-semibold text-xs uppercase tracking-widest">Alcance real del laboratorio</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase">Motos, Autos, Blindados y División Racing</h2>
+        <p class="text-zinc-400">Atendemos desde motocicletas de trabajo diario y KTM pequeñas hasta vehículos blindados y autos de competencia.</p>
+      </div>
 
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80" alt="Prueba en banco de dinamómetro">
-            <span class="service-tag">01 / TELEMETRÍA</span>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- MOTOS -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="inline-block bg-jk-red/15 text-jk-red text-xs font-bold px-3 py-1 rounded-md uppercase">1 · Motocicletas (Mayor volumen)</div>
+            <h3 class="font-display text-2xl font-bold uppercase">Motos de reparto, KTM, calle y doble propósito</h3>
+            <p class="text-sm text-zinc-300 leading-relaxed">
+              Hoy las motocicletas son nuestra línea más activa. Reconstruimos monoshocks y barras con falla hidráulica (fuga de aceite) o electrónica. Atendemos desde <strong>motos de repartidor y KTM pequeñas</strong> hasta BMW, Ducati, Yamaha, Honda y enduro.
+            </p>
           </div>
-          <div class="service-body">
-            <h3>Evaluación en Banco de Dinamómetro (Dyno)</h3>
-            <p>Medición objetiva de fuerza contra velocidad para detectar cavitación, pérdida de carga de nitrógeno, histéresis o asimetrías entre ejes antes y después de intervenir cada amortiguador.</p>
-            <div class="service-meta">
-              <span>Gráfica comparativa entregable</span>
-              <span>Baja & Alta Velocidad</span>
-            </div>
+          <ul class="text-xs text-zinc-400 space-y-1.5 pt-3 border-t border-jk-border">
+            <li>✓ Fugas de aceite y pérdida de gas/presión</li>
+            <li>✓ Suspensiones electrónicas de motocicleta (ESA / semi-activas)</li>
+            <li>✓ Showa, WP, Öhlins, Sachs y equipo original (OEM)</li>
+          </ul>
+        </div>
+
+        <!-- AUTOS Y BLINDADOS -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="inline-block bg-amber-500/15 text-amber-400 text-xs font-bold px-3 py-1 rounded-md uppercase">2 · Autos, SUVs y Blindados</div>
+            <h3 class="font-display text-2xl font-bold uppercase">Especialistas en Bilstein y vehículos blindados</h3>
+            <p class="text-sm text-zinc-300 leading-relaxed">
+              Con la estación <strong>Mangusta by Emmetec</strong> somos de los únicos talleres capaces de abrir y reconstruir amortiguadores <strong>Bilstein</strong> sellados. Además, reforzamos y revalvulamos amortiguadores para soportar el peso extra de <strong>autos y camionetas blindadas</strong>.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-400 space-y-1.5 pt-3 border-t border-jk-border">
+            <li>✓ Apertura limpia de cartuchos sellados Bilstein</li>
+            <li>✓ Modificación de dureza para blindados y SUVs</li>
+            <li>✓ Amortiguadores hidráulicos y electrónicos</li>
+          </ul>
+        </div>
+
+        <!-- RACING -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="inline-block bg-emerald-500/15 text-emerald-400 text-xs font-bold px-3 py-1 rounded-md uppercase">3 · División Racing & Off-Road</div>
+            <h3 class="font-display text-2xl font-bold uppercase">Coches de carreras, rally y 4x4 (FOX / King / KW)</h3>
+            <p class="text-sm text-zinc-300 leading-relaxed">
+              Inmersos en el automovilismo deportivo en México. Revalvulamos amortiguadores de pista, rally y off-road, y entregamos a nuestros clientes más exigentes las <strong>gráficas reales de fuerza vs. velocidad</strong> medidas en dinamómetro.
+            </p>
+          </div>
+          <ul class="text-xs text-zinc-400 space-y-1.5 pt-3 border-t border-jk-border">
+            <li>✓ Gráfica real de compresión y rebote en software de dinamómetro</li>
+            <li>✓ Servicio a coilovers KW, FOX Racing Shox, King, Reiger, Intrax</li>
+            <li>✓ Calibración personalizada por eje y peso</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FILTRO HONESTO: QUÉ NO TRABAJAMOS -->
+      <div class="bg-zinc-900/90 border border-amber-500/40 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="text-amber-400 font-semibold text-sm">
+            ⚠️ Para no hacerte dar una vuelta en vano: ¿Qué NO trabajamos?
+          </div>
+          <p class="text-sm text-zinc-300">
+            <strong>No trabajamos marca Italika ni motonetas (scooters)</strong> porque no manejamos sus refacciones internas. Tampoco podemos reconstruir amortiguadores cuyo <strong>tubo o flecha cromada estén golpeados o chuecos</strong>. Motos de trabajo/repartidor de otras marcas y KTM pequeñas <strong>sí las atendemos a diario</strong>.
+          </p>
+        </div>
+        <a href="#cotizar" class="shrink-0 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold px-4 py-2.5 rounded-lg border border-zinc-700 transition">
+          Consultar mi modelo →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILOSOFÍA ECO / RECICLAJE TÉCNICO -->
+  <section id="reciclaje" class="py-14 md:py-20 border-b border-jk-border bg-emerald-950/20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-7 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-semibold text-emerald-400">
+          <span>♻️ NUESTRO LEMA</span>
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">
+          "—Help! —Save The Earth By Letting Us Recycle Your Old Parts"
+        </h2>
+        <p class="text-zinc-300 text-sm sm:text-base leading-relaxed">
+          La Tierra pide ayuda cuando tiramos a la basura piezas de acero y aluminio de alta precisión que solo tenían desgastados sus sellos o su aceite. En <strong>JK Amortiguadores</strong> reciclamos todas las partes metálicas involucradas en la operación del amortiguador, reutilizando el cuerpo original y sustituyendo los internos por refacciones italianas nuevas.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4 pt-2 text-xs text-zinc-300">
+          <div class="bg-jk-card border border-jk-border p-4 rounded-xl">
+            <strong class="text-emerald-400 block mb-1">✓ Ahorro real frente a reemplazo</strong>
+            Conservas tu amortiguador original de fábrica (muchas veces de mejor calidad que un reemplazo genérico nuevo) a una fracción del costo.
+          </div>
+          <div class="bg-jk-card border border-jk-border p-4 rounded-xl">
+            <strong class="text-amber-400 block mb-1">✓ La única condición mecánica</strong>
+            Que el <strong>tubo exterior</strong> y la <strong>flecha cromada (vástago)</strong> no tengan golpes, rayaduras profundas ni estén doblados.
+          </div>
+        </div>
+      </div>
+      <div class="md:col-span-5">
+        <div class="grid grid-cols-2 gap-3">
+          <img src="IMG_7612.jpeg" alt="Folleto JK Custom Shocks e Intercomp" class="rounded-xl border border-jk-border object-cover aspect-[3/4] w-full" />
+          <img src="IMG_7613.jpeg" alt="Reciclaje de componentes y pruebas en dinamómetro" class="rounded-xl border border-jk-border object-cover aspect-[3/4] w-full" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LABORATORIO REAL: FOTOS DE TUS MÁQUINAS -->
+  <section id="tecnologia" class="py-16 md:py-24 border-b border-jk-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
+      <div class="max-w-3xl space-y-3">
+        <span class="text-amber-400 font-semibold text-xs uppercase tracking-widest">Equipamiento único en México</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase">Tecnología traída directamente de Italia y Banco Dinamómetro Intercomp</h2>
+        <p class="text-zinc-400">
+          Fuimos personalmente a Italia con nuestro ingeniero a seleccionar las máquinas del laboratorio. Aquí puedes ver las fotos reales de nuestro equipo en Coyoacán:
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- FOTO 1: BANCO DINAMÓMETRO AZUL (IMG_7601.jpeg) -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl overflow-hidden flex flex-col">
+          <div class="aspect-[4/3] bg-zinc-900 overflow-hidden">
+            <img id="img-dino" src="IMG_7601.jpeg" alt="Banco dinamómetro de amortiguadores JK" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-5 space-y-2 flex-1">
+            <h3 class="font-display text-lg font-bold uppercase text-white">Banco Dinamómetro en Cabina</h3>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Sometemos el amortiguador a ciclos reales de trabajo dentro de la cabina de seguridad para verificar que no existan fugas y medir su rendimiento real.
+            </p>
           </div>
         </div>
 
-        <div class="service-card">
-          <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1000&q=80" alt="Servicio autorizado Öhlins">
-            <span class="service-tag">02 / CERTIFICACIÓN OFICIAL</span>
+        <!-- FOTO 2: CELDA INTERCOMP (IMG_7606.jpeg) -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl overflow-hidden flex flex-col">
+          <div class="aspect-[4/3] bg-zinc-900 overflow-hidden">
+            <img id="img-intercomp" src="IMG_7606.jpeg" alt="Cabezal dinamómetro Intercomp JK Amortiguadores" class="w-full h-full object-cover" />
           </div>
-          <div class="service-body">
-            <h3>Centro de Servicio Autorizado Öhlins</h3>
-            <p>Mantenimiento preventivo y reconstrucción con retenes, sellos, fluidos de baja fricción y refacciones 100 % originales bajo especificaciones de fábrica para pista, calle y enduro.</p>
-            <div class="service-meta">
-              <span>Refacciones originales</span>
-              <span>Presurización con Nitrógeno</span>
-            </div>
+          <div class="p-5 space-y-2 flex-1">
+            <h3 class="font-display text-lg font-bold uppercase text-white">Celda de Carga Intercomp</h3>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Sensor de precisión <strong>Intercomp</strong> que registra con exactitud los kilogramos de fuerza en compresión y rebote en cada milímetro de carrera.
+            </p>
           </div>
         </div>
 
-        <div class="service-card">
-          <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80" alt="Revalving y modificación personalizada">
-            <span class="service-tag">03 / CUSTOM VALVING</span>
+        <!-- FOTO 3: GRÁFICA DE TELEMETRÍA EN LAPTOP (IMG_7605.jpeg) -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl overflow-hidden flex flex-col">
+          <div class="aspect-[4/3] bg-zinc-900 overflow-hidden">
+            <img id="img-grafica" src="IMG_7605.jpeg" alt="Gráfica Fuerza vs Velocidad en tiempo real" class="w-full h-full object-cover" />
           </div>
-          <div class="service-body">
-            <h3>Re-Valving y Modificación de Curvas</h3>
-            <p>Recalibración interna de paquetes de lainas (shims), pistones y pasos hidráulicos para adaptar el comportamiento del vehículo a blindaje, peso adicional, track days o topografía mexicana.</p>
-            <div class="service-meta">
-              <span>Compresión / Extensión a medida</span>
-              <span>Cálculo por peso vehicular</span>
-            </div>
+          <div class="p-5 space-y-2 flex-1">
+            <h3 class="font-display text-lg font-bold uppercase text-white">Curvas Fuerza vs. Velocidad</h3>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Entregamos datos y gráficas reales (Compresión vs. Rebote en kg a distintas velocidades en cm/seg) para que tengas certeza matemática del resultado.
+            </p>
           </div>
         </div>
 
-        <div class="service-card">
-          <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80" alt="Modificación dimensional y fabricación">
-            <span class="service-tag">04 / FABRICACIÓN & ADAPTACIÓN</span>
+        <!-- FOTO 4: CONTROL CNC OSAI / MANGUSTA (IMG_7609.jpeg) -->
+        <div class="bg-jk-card border border-jk-border rounded-2xl overflow-hidden flex flex-col">
+          <div class="aspect-[4/3] bg-zinc-900 overflow-hidden">
+            <img id="img-osai" src="IMG_7609.jpeg" alt="Panel de control italiano OSAI en máquina Mangusta" class="w-full h-full object-cover" />
           </div>
-          <div class="service-body">
-            <h3>Modificación Dimensional y Proyectos Especiales</h3>
-            <p>Ajuste de carreras, longitudes extendidas/comprimidas, maquinado de vástagos, conversión a coilover y reconstrucción para clásicos, restomods, off-road y vehículos de competencia.</p>
-            <div class="service-meta">
-              <span>Maquinado de precisión</span>
-              <span>Soluciones fuera de catálogo</span>
-            </div>
+          <div class="p-5 space-y-2 flex-1">
+            <h3 class="font-display text-lg font-bold uppercase text-white">Precisión Italiana OSAI / Emmetec</h3>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Control numérico italiano en nuestra estación <strong>Mangusta by Emmetec</strong> para abrir, maquinar y sellar amortiguadores Bilstein con precisión de fábrica.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- INTERACTIVE DYNO SIMULATOR -->
-  <section id="dinamometro">
-    <div class="container">
-      <div class="eyebrow">Simulador Interactivo de Telemetría</div>
-      <h2 class="section-title">La diferencia entre sentir y medir.</h2>
-      <p class="section-desc">
-        Explora cómo nuestro banco de pruebas grafica la respuesta hidráulica en compresión y extensión según el perfil de uso que diseñamos para tu vehículo.
-      </p>
+  <!-- EL EQUIPO -->
+  <section id="equipo" class="py-16 md:py-24 border-b border-jk-border bg-jk-card/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
+      <div class="max-w-3xl space-y-3">
+        <span class="text-jk-red font-semibold text-xs uppercase tracking-widest">Quiénes están detrás de tu suspensión</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase">Más de 30 años de ingeniería y un equipo con 26 años en casa</h2>
+        <p class="text-zinc-400">
+          Nuestros clientes cruzan toda la ciudad para traer sus vehículos porque saben exactamente qué manos diagnostican, arman y prueban sus amortiguadores.
+        </p>
+      </div>
 
-      <div class="dyno-box">
-        <div class="dyno-top">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-5 space-y-2">
+          <div class="text-xs font-bold text-jk-red uppercase">Dirección de Ingeniería</div>
+          <h3 class="font-display text-xl font-bold">Ing. Jesús Córdoba</h3>
+          <p class="text-xs text-amber-400 font-medium">Ingeniero Mecánico Electricista</p>
+          <p class="text-sm text-zinc-300 pt-1">
+            Seleccionó personalmente en Italia el equipamiento Emmetec del laboratorio. Dirige el diagnóstico hidráulico, electrónico y las pruebas en dinamómetro.
+          </p>
+        </div>
+
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-5 space-y-2">
+          <div class="text-xs font-bold text-emerald-400 uppercase">Socio & División Racing</div>
+          <h3 class="font-display text-xl font-bold">Rodolfo</h3>
+          <p class="text-xs text-zinc-400 font-medium">Automovilismo Deportivo & Redes</p>
+          <p class="text-sm text-zinc-300 pt-1">
+            Vinculado directamente al ambiente racing en México. Coordina las suspensiones para autos de carreras y la atención en nuestras redes sociales.
+          </p>
+        </div>
+
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-5 space-y-2">
+          <div class="text-xs font-bold text-amber-400 uppercase">26 Años con Nosotros</div>
+          <h3 class="font-display text-xl font-bold">Reyna</h3>
+          <p class="text-xs text-zinc-400 font-medium">Recepción, Atención y Administración</p>
+          <p class="text-sm text-zinc-300 pt-1">
+            26 años recibiendo a nuestros clientes en el taller, dando seguimiento puntual a cada amortiguador y cuidando que tu experiencia sea impecable.
+          </p>
+        </div>
+
+        <div class="bg-jk-card border border-jk-border rounded-2xl p-5 space-y-2">
+          <div class="text-xs font-bold text-zinc-300 uppercase">Maestría en Banco</div>
+          <h3 class="font-display text-xl font-bold">+26 Años de Oficio</h3>
+          <p class="text-xs text-zinc-400 font-medium">Especialista Maestro de Planta</p>
+          <p class="text-sm text-zinc-300 pt-1">
+            Nuestro técnico más longevo supera los 26 años en el taller. Miles de amortiguadores reconstruidos con precisión artesanal e industrial.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COTIZADOR RÁPIDO DE WHATSAPP -->
+  <section id="cotizar" class="py-16 md:py-24 border-b border-jk-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="bg-jk-card border border-jk-border rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+        <div class="space-y-2">
+          <span class="text-jk-red font-semibold text-xs uppercase tracking-widest">Presupuesto directo</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase">Cotiza tu amortiguador por WhatsApp</h2>
+          <p class="text-zinc-300 text-sm">
+            Solo indícanos <strong>modelo, año y tipo de falla</strong> (la mayoría de las veces es hidráulica cuando se escurrió el aceite, o eléctrica si marca testigo). Recuerda que el tubo y la flecha cromada no deben estar golpeados.
+          </p>
+        </div>
+
+        <form id="wa-form" onsubmit="enviarWhatsApp(event)" class="grid sm:grid-cols-2 gap-5">
           <div>
-            <strong style="font-size: 1.05rem;">Curva Fuerza (N) vs. Velocidad de Pistón (mm/s)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-muted);" id="dynoSubtitle">Perfil seleccionado: Calle / OEM+ & Blindados</p>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">1. Tipo de vehículo</label>
+            <select id="wa-tipo" class="w-full bg-jk-dark border border-jk-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-jk-red">
+              <option value="Moto">Motocicleta (Calle / KTM / Alto cilindraje / Reparto)</option>
+              <option value="Auto / SUV">Automóvil / Camioneta SUV</option>
+              <option value="Blindado">Vehículo Blindado</option>
+              <option value="Racing / Off-Road">Auto de Carreras / Rally / Off-Road</option>
+            </select>
           </div>
-          <div class="dyno-tabs">
-            <button class="dyno-tab active" id="tab-street" onclick="setDynoProfile('street')">Calle / OEM+</button>
-            <button class="dyno-tab" id="tab-track" onclick="setDynoProfile('track')">Track / Motorsport</button>
-            <button class="dyno-tab" id="tab-offroad" onclick="setDynoProfile('offroad')">Off-Road / Rally</button>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">2. Marca, Modelo y Año *</label>
+            <input id="wa-modelo" type="text" required placeholder="Ej. KTM Duke 390 2022 / Bilstein BMW / FOX" class="w-full bg-jk-dark border border-jk-border rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-jk-red" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">3. ¿Qué falla notas en el amortiguador? *</label>
+            <div class="grid sm:grid-cols-3 gap-3">
+              <label class="flex items-start gap-3 bg-jk-dark border border-jk-border rounded-xl p-3.5 cursor-pointer hover:border-zinc-500">
+                <input type="radio" name="falla" value="Hidráulica (se escurrió el aceite / rebota / perdió presión)" checked class="mt-1 accent-jk-red" />
+                <span class="text-xs leading-relaxed">
+                  <strong class="block text-white">Hidráulica (Se escurrió el aceite)</strong>
+                  <span class="text-zinc-400">Fuga visible de aceite, rebota mucho o golpea al pasar topes.</span>
+                </span>
+              </label>
+
+              <label class="flex items-start gap-3 bg-jk-dark border border-jk-border rounded-xl p-3.5 cursor-pointer hover:border-zinc-500">
+                <input type="radio" name="falla" value="Eléctrica / Electrónica (testigo encendido o falla en ajuste)" class="mt-1 accent-jk-red" />
+                <span class="text-xs leading-relaxed">
+                  <strong class="block text-white">Eléctrica / Electrónica</strong>
+                  <span class="text-zinc-400">Prende aviso en tablero, se quedó duro o no cambia de modo.</span>
+                </span>
+              </label>
+
+              <label class="flex items-start gap-3 bg-jk-dark border border-jk-border rounded-xl p-3.5 cursor-pointer hover:border-zinc-500">
+                <input type="radio" name="falla" value="No estoy seguro / Quiero prueba en dinamómetro o modificación" class="mt-1 accent-jk-red" />
+                <span class="text-xs leading-relaxed">
+                  <strong class="block text-white">Diagnóstico / Modificación</strong>
+                  <span class="text-zinc-400">No estoy seguro si es eléctrica o busco revalvulado/dinamómetro.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">¿El tubo y la flecha cromada están sin golpes? / Comentarios</label>
+            <input id="wa-extra" type="text" placeholder="Ej. El vástago cromado está limpio sin golpes, solo tiró el aceite..." class="w-full bg-jk-dark border border-jk-border rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-jk-red" />
+          </div>
+
+          <div class="sm:col-span-2 pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <p class="text-xs text-zinc-400">* No trabajamos Italika ni motonetas (scooters).</p>
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-7 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg">
+              <span>Enviar por WhatsApp (+52 55 9185 5387)</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- UBICACIÓN Y CONTACTO OFICIAL (DATOS DEL FOLLETO) -->
+  <section id="ubicacion" class="py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-7 space-y-6">
+        <span class="text-jk-red font-semibold text-xs uppercase tracking-widest">Contacto y Recepción</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase">Privada Acolco #52 · Coyoacán, CDMX</h2>
+        <p class="text-zinc-300 text-sm leading-relaxed">
+          Estamos en el Pueblo de Los Reyes, Coyoacán (compartiendo instalaciones con nuestras divisiones hermanas Pro Car Auto Técnica y Motohaus). Recibimos amortiguadores directamente en taller y por paquetería de toda la República.
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4 bg-jk-card border border-jk-border rounded-2xl p-6 text-sm">
+          <div class="space-y-1">
+            <div class="text-xs font-bold uppercase text-zinc-400">Dirección Exacta</div>
+            <div class="text-white font-medium">Privada Acolco #52, Pueblo de Los Reyes, CP 04330, Coyoacán, CDMX, México</div>
+            <a href="https://maps.google.com/?q=Privada+Acolco+52+Pueblo+de+los+Reyes+Coyoacan+CDMX" target="_blank" rel="noopener" class="inline-block text-jk-red hover:underline text-xs font-semibold pt-1">
+              Ver en Google Maps →
+            </a>
+          </div>
+
+          <div class="space-y-2">
+            <div>
+              <div class="text-xs font-bold uppercase text-zinc-400">WhatsApp y Teléfonos</div>
+              <div class="text-white font-medium mt-0.5">WhatsApp: +52 55 9185-5387</div>
+              <div class="text-zinc-300 text-xs">Tel. JK: +52 55 5421-0082 · Fijo: (55) 5618-2070</div>
+            </div>
+            <div class="pt-1">
+              <div class="text-xs font-bold uppercase text-zinc-400">Correo Directo</div>
+              <a href="mailto:jesus.cordoba@jkamortiguadores.mx" class="text-amber-400 hover:underline text-xs">
+                jesus.cordoba@jkamortiguadores.mx
+              </a>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2 pt-4 border-t border-jk-border flex flex-wrap items-center justify-between gap-3">
+            <span class="text-xs font-bold uppercase text-zinc-400">Síguenos en redes:</span>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://www.instagram.com/jk_amortiguadores/" target="_blank" rel="noopener" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 rounded-lg transition">
+                Instagram @jk_amortiguadores
+              </a>
+              <a href="https://www.facebook.com/jkamortiguadores" target="_blank" rel="noopener" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium px-3.5 py-2 rounded-lg transition">
+                Facebook /jkamortiguadores
+              </a>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="dyno-layout">
-          <div class="dyno-canvas">
-            <svg id="dynoSvg" viewBox="0 0 600 300" width="100%" height="280"></svg>
-            <div class="dyno-legend">
-              <div class="legend-item">
-                <span class="legend-line" style="background: var(--accent-gold);"></span>
-                <span>Curva calibrada en JK (Óptima sin cavitación)</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-line" style="background: var(--text-muted); opacity: 0.55;"></span>
-                <span>Amortiguador fatigado / sin servicio</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="dyno-metrics">
-            <div class="metric-card">
-              <div class="metric-label">Compresión Baja Velocidad (Control de Carrocería)</div>
-              <div class="metric-value" id="m-lsc">+28% Firmeza Progresiva</div>
-              <div class="metric-note" id="m-lsc-note">Elimina cabeceo al frenar y balanceo en curva sin sacrificar confort urbano.</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Compresión Alta Velocidad (Absorción de Baches)</div>
-              <div class="metric-value" id="m-hsc">Flujo Laminar Desahogado</div>
-              <div class="metric-note" id="m-hsc-note">Protege rines y chasis ante impactos súbitos en asfalto irregular.</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Control de Rebote / Extensión</div>
-              <div class="metric-value" id="m-reb">Histéresis &lt; 2.1%</div>
-              <div class="metric-note" id="m-reb-note">Tracción inmediata del neumático tras la compresión, cero flotación.</div>
-            </div>
-          </div>
+      <div class="md:col-span-5">
+        <div class="bg-jk-card border border-jk-border rounded-2xl overflow-hidden p-4 space-y-3">
+          <img src="IMG_7614.jpeg" alt="Catálogo de amortiguadores reconstruidos en JK Custom Shocks" class="w-full rounded-xl object-cover aspect-[3/4]" />
+          <p class="text-xs text-center text-zinc-400">Reconstrucción de amortiguadores de moto, auto, blindados y competencia con componentes italianos.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PLATFORMS & VISUAL SHOWCASE -->
-  <section id="aplicaciones">
-    <div class="container">
-      <div class="eyebrow">Especialidades por División</div>
-      <h2 class="section-title">Tres mundos, un mismo estándar de ingeniería.</h2>
-      <p class="section-desc">
-        Filtra nuestras áreas de intervención para conocer el alcance técnico en cada plataforma.
-      </p>
-
-      <div class="platform-filter-bar">
-        <button class="filter-btn active" onclick="filterPlatform('all', this)">Todas las divisiones</button>
-        <button class="filter-btn" onclick="filterPlatform('auto', this)">Autos de Calle & Blindados</button>
-        <button class="filter-btn" onclick="filterPlatform('motorsport', this)">Track & Motorsport</button>
-        <button class="filter-btn" onclick="filterPlatform('moto', this)">Motocicletas High-End</button>
-      </div>
-
-      <div class="gallery-grid" id="platformGallery">
-        <div class="gallery-item" data-cat="auto">
-          <div class="gallery-img">
-            <img src="https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=900&q=80" alt="Deportivos y sedanes premium">
-          </div>
-          <div class="gallery-caption">
-            <h4>Gran Turismo, Premium & Blindados</h4>
-            <p>Reconstrucción de amortiguadores magnéticos/electrónicos y recalibración para soportar blindaje sin perder altura ni estabilidad.</p>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-cat="motorsport">
-          <div class="gallery-img">
-            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=900&q=80" alt="Autos de pista y competencia">
-          </div>
-          <div class="gallery-caption">
-            <h4>Track Day, Circuito & Rally</h4>
-            <p>Puesta a punto de coilovers de 1, 2, 3 y 4 vías (Öhlins, KW, Penske, Bilstein) con emparejamiento exacto en dinamómetro.</p>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-cat="moto">
-          <div class="gallery-img">
-            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=900&q=80" alt="Motocicletas de alto desempeño">
-          </div>
-          <div class="gallery-caption">
-            <h4>Motocicletas Supersport, Adventure & Enduro</h4>
-            <p>Mantenimiento integral de barras delanteras, cartuchos presurizados y monoshocks traseros (Öhlins, WP, Marzocchi, Sachs).</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONCIERGE / WHATSAPP CONFIGURATOR & LOCATION -->
-  <section id="contacto">
-    <div class="container">
-      <div class="eyebrow">Atención Directa de Ingeniería</div>
-      <h2 class="section-title">Inicia tu diagnóstico o visítanos en Coyoacán.</h2>
-      <p class="section-desc">
-        Selecciona la configuración de tu vehículo para enviar una ficha técnica directa a nuestro WhatsApp o acude directamente a nuestro laboratorio sin necesidad de cita previa.
-      </p>
-
-      <div class="concierge-grid">
-        <div class="config-card">
-          <div class="step-group">
-            <label class="step-label">1. Plataforma del vehículo</label>
-            <div class="option-pills" id="pillGroupPlatform">
-              <button class="opt-pill selected" onclick="selectPill('platform', 'Auto de Calle / Premium', this)">Auto de Calle / Premium</button>
-              <button class="opt-pill" onclick="selectPill('platform', 'Auto Track / Competencia', this)">Auto Track / Competencia</button>
-              <button class="opt-pill" onclick="selectPill('platform', 'Motocicleta', this)">Motocicleta</button>
-              <button class="opt-pill" onclick="selectPill('platform', 'Camioneta / Off-Road / Blindado', this)">Off-Road / Blindado</button>
-            </div>
-          </div>
-
-          <div class="step-group">
-            <label class="step-label">2. Servicio requerido</label>
-            <div class="option-pills" id="pillGroupService">
-              <button class="opt-pill selected" onclick="selectPill('service', 'Reconstrucción / Mantenimiento', this)">Reconstrucción / Servicio</button>
-              <button class="opt-pill" onclick="selectPill('service', 'Prueba en Dinamómetro (Dyno)', this)">Prueba en Dinamómetro</button>
-              <button class="opt-pill" onclick="selectPill('service', 'Servicio Autorizado Öhlins', this)">Servicio Autorizado Öhlins</button>
-              <button class="opt-pill" onclick="selectPill('service', 'Modificación / Valving a Medida', this)">Modificación / Re-Valving</button>
-            </div>
-          </div>
-
-          <div class="step-group">
-            <label class="step-label">3. Marca de suspensión o modelo de vehículo (Opcional)</label>
-            <input type="text" id="vehicleDetails" class="input-field" placeholder="Ej. Bilstein B8 en BMW M2 / Monoshock Öhlins en R1250GS">
-          </div>
-
-          <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="sendWhatsAppConfig()">
-            Enviar ficha técnica por WhatsApp →
-          </button>
-        </div>
-
-        <div class="info-card">
-          <div class="info-block">
-            <h4>Dirección del Laboratorio</h4>
-            <p>Acolco 52, Col. Los Reyes, Coyoacán<br>04330 Ciudad de México, CDMX</p>
-            <p style="margin-top: 8px;">
-              <a href="https://maps.google.com/?q=Acolco+52,+Los+Reyes,+Coyoacan,+04330+CDMX" target="_blank" rel="noopener">Abrir ubicación en Google Maps ↗</a>
-            </p>
-          </div>
-
-          <div class="info-block">
-            <h4>Horario de Recepción</h4>
-            <p>Lunes a Viernes: 09:00 a 18:00 hrs</p>
-            <p style="font-size: 0.84rem; color: var(--accent-green); margin-top: 4px;">✓ Recepción directa sin cita previa (Walk-ins welcome)</p>
-          </div>
-
-          <div class="info-block">
-            <h4>Teléfono Directo</h4>
-            <p><a href="tel:+525556182070">+52 55 5618 2070</a></p>
-          </div>
-
-          <div class="info-block">
-            <h4>Redes & Comunidad Técnica</h4>
-            <p>
-              Instagram: <a href="https://instagram.com/jk_amortiguadores" target="_blank" rel="noopener">@jk_amortiguadores</a><br>
-              Web oficial: www.jkamortiguadores.mx
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <strong>JK Amortiguadores</strong> — Reparación · Modificación · Adaptación · Construcción<br>
-      Acolco 52, Los Reyes, Coyoacán, CDMX · Tel. 55 5618 2070 · Propuesta de Arquitectura Digital
+  <!-- FOOTER -->
+  <footer class="border-t border-jk-border py-8 text-center text-xs text-zinc-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>© 2026 JK Amortiguadores S.A. de C.V. (JK Custom Shocks) · www.jkamortiguadores.mx</div>
+      <div>Privada Acolco #52, Coyoacán, CDMX · Save The Earth By Letting Us Recycle Your Old Parts ♻️</div>
     </div>
   </footer>
 
   <script>
-    // THEME LOGIC (Respeta modo del sistema por defecto)
-    function updateThemeUI() {
-      const btn = document.getElementById("themeBtn");
-      if (!btn) return;
-      const isLight = document.documentElement.getAttribute("data-theme") === "light";
-      btn.textContent = isLight ? "☾ Oscuro" : "☀ Claro";
-    }
+    // Si Yisus activa un número nuevo esta semana, solo cámbialo aquí:
+    const WHATSAPP_JK = "525591855387";
 
-    function toggleTheme() {
-      const html = document.documentElement;
-      const isLight = html.getAttribute("data-theme") === "light";
-      const next = isLight ? "dark" : "light";
-      html.setAttribute("data-theme", next);
-      try { localStorage.setItem("jk-theme", next); } catch (e) {}
-      updateThemeUI();
-    }
+    function enviarWhatsApp(e) {
+      e.preventDefault();
+      const tipo = document.getElementById("wa-tipo").value;
+      const modelo = document.getElementById("wa-modelo").value.trim();
+      const fallaEl = document.querySelector('input[name="falla"]:checked');
+      const falla = fallaEl ? fallaEl.value : "";
+      const extra = document.getElementById("wa-extra").value.trim();
 
-    if (window.matchMedia) {
-      window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function(e) {
-        let saved = null;
-        try { saved = localStorage.getItem("jk-theme"); } catch (err) {}
-        if (!saved) {
-          document.documentElement.setAttribute("data-theme", e.matches ? "light" : "dark");
-          updateThemeUI();
-        }
-      });
-    }
+      let msg = `Hola JK Amortiguadores, quiero cotizar la reconstrucción de mi amortiguador:\n\n` +
+                `• *Vehículo:* ${tipo}\n` +
+                `• *Modelo y Año:* ${modelo}\n` +
+                `• *Falla:* ${falla}`;
+      if (extra) msg += `\n• *Detalle / Estado del vástago:* ${extra}`;
 
-    // DYNO TELEMETRY SIMULATOR
-    const DYNO_PROFILES = {
-      street: {
-        subtitle: "Perfil seleccionado: Calle / OEM+ & Blindados",
-        optPath: "M 40,150 Q 190,105 320,75 T 560,38 M 40,150 Q 190,195 320,222 T 560,255",
-        wornPath: "M 40,150 Q 180,135 320,122 T 560,108 M 40,150 Q 180,168 320,185 T 560,205",
-        lsc: "+28% Firmeza Progresiva",
-        lscNote: "Elimina cabeceo al frenar y balanceo en curva sin sacrificar confort urbano.",
-        hsc: "Flujo Laminar Desahogado",
-        hscNote: "Protege rines y chasis ante impactos súbitos en asfalto irregular.",
-        reb: "Histéresis < 2.1%",
-        rebNote: "Tracción inmediata del neumático tras la compresión, cero flotación."
-      },
-      track: {
-        subtitle: "Perfil seleccionado: Track Day / Motorsport",
-        optPath: "M 40,150 Q 170,78 310,48 T 560,20 M 40,150 Q 170,222 310,252 T 560,280",
-        wornPath: "M 40,150 Q 180,128 320,115 T 560,96 M 40,150 Q 180,175 320,195 T 560,218",
-        lsc: "+54% Soporte de Plataforma",
-        lscNote: "Máxima estabilidad aerodinámica y transferencia de pesos milimétrica en apoyos.",
-        hsc: "Digresivo de Competencia",
-        hscNote: "Absorbe lavaderos (kerbs) en circuito manteniendo el neumático pegado al piso.",
-        reb: "Emparejamiento < 1.0%",
-        rebNote: "Simetría izquierda/derecha certificada en banco de pruebas."
-      },
-      offroad: {
-        subtitle: "Perfil seleccionado: Off-Road / Rally Raid & Carga",
-        optPath: "M 40,150 Q 200,92 350,55 T 560,26 M 40,150 Q 200,205 350,238 T 560,268",
-        wornPath: "M 40,150 Q 190,132 330,118 T 560,102 M 40,150 Q 190,170 330,188 T 560,210",
-        lsc: "Control Progresivo de Carrera",
-        lscNote: "Evita topes bruscos (bottom-out) en saltos, terracería rápida y carga pesada.",
-        hsc: "Resistencia Térmica Extendida",
-        hscNote: "Fluidos sintéticos de alto índice de viscosidad contra fatiga por temperatura.",
-        reb: "Recuperación Rápida Controlada",
-        rebNote: "Prepara la rueda para obstáculos consecutivos sin empaquetamiento (packing)."
-      }
-    };
-
-    function setDynoProfile(key) {
-      const p = DYNO_PROFILES[key];
-      if (!p) return;
-      ["street", "track", "offroad"].forEach(k => {
-        document.getElementById("tab-" + k).classList.toggle("active", k === key);
-      });
-      document.getElementById("dynoSubtitle").textContent = p.subtitle;
-      document.getElementById("m-lsc").textContent = p.lsc;
-      document.getElementById("m-lsc-note").textContent = p.lscNote;
-      document.getElementById("m-hsc").textContent = p.hsc;
-      document.getElementById("m-hsc-note").textContent = p.hscNote;
-      document.getElementById("m-reb").textContent = p.reb;
-      document.getElementById("m-reb-note").textContent = p.rebNote;
-
-      const svg = document.getElementById("dynoSvg");
-      svg.innerHTML = `
-        <line x1="40" y1="30" x2="560" y2="30" stroke="var(--grid-line)" stroke-width="1"/>
-        <line x1="40" y1="90" x2="560" y2="90" stroke="var(--grid-line)" stroke-width="1"/>
-        <line x1="40" y1="150" x2="560" y2="150" stroke="var(--border)" stroke-width="1.5"/>
-        <line x1="40" y1="210" x2="560" y2="210" stroke="var(--grid-line)" stroke-width="1"/>
-        <line x1="40" y1="270" x2="560" y2="270" stroke="var(--grid-line)" stroke-width="1"/>
-        <text x="45" y="24" fill="var(--text-muted)" font-size="10" font-family="monospace">COMPRESIÓN (+N)</text>
-        <text x="45" y="286" fill="var(--text-muted)" font-size="10" font-family="monospace">EXTENSIÓN / REBOTE (-N)</text>
-        <text x="460" y="144" fill="var(--text-muted)" font-size="10" font-family="monospace">Velocidad (mm/s) →</text>
-        <path d="${p.wornPath}" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="6,5" opacity="0.55"/>
-        <path d="${p.optPath}" fill="none" stroke="var(--accent-gold)" stroke-width="3.2" stroke-linecap="round"/>
-        <circle cx="40" cy="150" r="4" fill="var(--text-main)"/>
-      `;
-    }
-
-    // PLATFORM FILTER
-    function filterPlatform(cat, btnEl) {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btnEl.classList.add("active");
-      document.querySelectorAll("#platformGallery .gallery-item").forEach(item => {
-        if (cat === "all" || item.getAttribute("data-cat") === cat) {
-          item.style.display = "flex";
-        } else {
-          item.style.display = "none";
-        }
-      });
-    }
-
-    // WHATSAPP CONFIGURATOR
-    let selectedConfig = {
-      platform: "Auto de Calle / Premium",
-      service: "Reconstrucción / Mantenimiento"
-    };
-
-    function selectPill(group, val, btnEl) {
-      selectedConfig[group] = val;
-      const parentId = group === "platform" ? "pillGroupPlatform" : "pillGroupService";
-      document.querySelectorAll("#" + parentId + " .opt-pill").forEach(b => b.classList.remove("selected"));
-      btnEl.classList.add("selected");
-    }
-
-    function sendWhatsAppConfig() {
-      const details = document.getElementById("vehicleDetails").value.trim();
-      let msg = `Hola JK Amortiguadores, me gustaría solicitar información / cotización:\n\n`;
-      msg += `• Plataforma: ${selectedConfig.platform}\n`;
-      msg += `• Servicio: ${selectedConfig.service}\n`;
-      if (details) {
-        msg += `• Vehículo / Suspensión: ${details}\n`;
-      }
-      const url = `https://wa.me/525556182070?text=${encodeURIComponent(msg)}`;
+      const url = `https://wa.me/${WHATSAPP_JK}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
     }
-
-    // INIT
-    updateThemeUI();
-    setDynoProfile("street");
   </script>
 </body>
 </html>
